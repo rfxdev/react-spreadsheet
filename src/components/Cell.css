@@ -1,0 +1,18 @@
+.cell {
+  width: 80px;
+  height: 25px;
+  padding: 5px;
+  margin: 0;
+  border: 1px solid black;
+  display: inline-block;
+  position: relative;
+  text-align: left;
+  vertical-align: top;
+  overflow: hidden;
+  font-size: 14px;
+}
+
+.cell-selected {
+  outline-color: lightblue;
+  outline-style: dotted;
+}
