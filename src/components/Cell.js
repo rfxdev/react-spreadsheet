@@ -16,13 +16,34 @@ export default class Cell extends React.Component {
     );
   }
 
+  componentDidMount() {
+    window.document.addEventListener("unselectAll", this.handleUnselectAll);
+  }
+
+  componentWillUnmount() {
+    window.document.removeEventListener("unselectAll", this.handleUnselectAll);
+  }
+
+  handleUnselectAll = () => {
+    if (this.state.selected || this.state.editing) {
+      this.setState({ selected: false, editing: false });
+    }
+  };
+
+  emitUnselectAllEvent = () => {
+    const unselectAllEvent = new Event("unselectAll");
+    window.document.dispatchEvent(unselectAllEvent);
+  };
+
   determineDisplay = ({ x, y }, value) => value;
 
   clicked = () => {
+    this.emitUnselectAllEvent();
     this.setState({ selected: true });
   };
 
   doubleClicked = () => {
+    this.emitUnselectAllEvent();
     this.setState({ selected: true, editing: true });
   };
 
