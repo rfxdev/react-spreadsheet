@@ -55,6 +55,21 @@ export default class Cell extends React.Component {
     );
   };
 
+  hasNewValue = value => {
+    this.props.onChangedValue(
+      {
+        x: this.props.x,
+        y: this.props.y
+      },
+      value
+    );
+    this.setState({ editing: false });
+  };
+
+  onBlur = e => {
+    this.hasNewValue(e.target.value);
+  };
+
   render() {
     let cellClass = "cell";
 
@@ -63,25 +78,29 @@ export default class Cell extends React.Component {
     }
 
     if (this.state.editing) {
+      cellClass += " cell-editing";
       return (
-        <input
-          className={cellClass}
-          type="text"
-          onChange={this.onChange}
-          value={this.state.value}
-          autoFocus
-        />
+        <td className={cellClass}>
+          <input
+            type="text"
+            onChange={this.onChange}
+            onBlur={this.onBlur}
+            value={this.state.value}
+            autoFocus
+          />
+        </td>
       );
     }
 
     return (
-      <div
+      <td
         className={cellClass}
         onClick={e => this.clicked(e)}
         onDoubleClick={e => this.doubleClicked(e)}
+        role="presentation"
       >
         {this.display}
-      </div>
+      </td>
     );
   }
 }

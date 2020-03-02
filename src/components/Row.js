@@ -5,13 +5,20 @@ const Row = props => {
   const cells = [];
   const { y } = props;
 
-  for (let x = 0; x < props.x; x += 1) {
+  for (let ix = 0; ix < props.x; ix += 1) {
+    const cellData = props.rowData[ix] || "";
     cells.push(
-      <Cell key={`${x}-${y}`} y={y} x={x} value={props.rowData[x] || ""} />
+      <Cell
+        key={`${y}-${ix}`}
+        y={y}
+        x={ix}
+        value={cellData}
+        onChangedValue={props.handleChangedCells}
+      />
     );
   }
 
-  return <div>{cells}</div>;
+  return <tr>{cells}</tr>;
 };
 
 export default Row;
